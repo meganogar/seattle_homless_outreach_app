@@ -174,7 +174,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  ///Widget to help with spacing, allos us to define height of image///
+                  ///Widget to help with spacing, allows us to define height of image///
                   height: 300.0,
                   child: Image.asset(
                     "assets/images/logotrrans.png",
@@ -212,10 +212,51 @@ class NavMainPage extends StatelessWidget {
         title: const Text('Seattle Homless Outreach App'),
         ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text('Encampment Data'),
-        ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {},
+                child: Text('Encampment Data'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+            ),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {},
+                child: Text('Special Requests'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+            ),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {},
+                child: Text('Pending'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+            ),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {},
+                child: Text('Pending'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ]
+          ),
       )
     );
   }
