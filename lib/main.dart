@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'gmap.dart';
+
+final maps = dotenv.env['GOOGLE_MAPS_API_KEY'];
 
 void main() {
   /// entry point of our whole program so it must always be defined if you want to render something on the screen, can use arrow notation///
@@ -205,6 +211,8 @@ class NavMainPage extends StatelessWidget {
       /// widget that builds the homepage ~ not the login page ///
   const NavMainPage({ Key? key }) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,52 +220,69 @@ class NavMainPage extends StatelessWidget {
         title: const Text('Seattle Homless Outreach App'),
         ),
       body: Center(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            ListTile(
-              title: ElevatedButton(
-                onPressed: () {},
-                child: Text('Encampment Data'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ListTile(
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Gmap()),
+                      );
+                    },
+                    child: Text('Encampment Data'),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                      textStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                ListTile(
+                  title: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Special Requests'),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                      textStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                ListTile(
+                  title: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Pending'),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                      textStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                ListTile(
+                  title: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Logout'),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                      textStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                ]
               ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                onPressed: () {},
-                child: Text('Special Requests'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                onPressed: () {},
-                child: Text('Pending'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                onPressed: () {},
-                child: Text('Pending'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ),
-            ),
-          ]
-          ),
-      )
-    );
+          )
+    )
+  )
+  );
   }
 }
+
+/// Future things to do
+/// 1. Refractor the NavMainPage so that I don't repeat so much code
+/// 2. Put classes into seperate folders and import as approrpiate
+/// 
