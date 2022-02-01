@@ -12,7 +12,7 @@ class Gmap extends StatefulWidget {
 class _GmapState extends State<Gmap> {
 late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(47.6062, 122.3321);
+  final LatLng _center = const LatLng(47.6062, -122.3321);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -30,7 +30,7 @@ late GoogleMapController mapController;
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11.0,
+            zoom: 13.0,
           ),
         ),
       ),
