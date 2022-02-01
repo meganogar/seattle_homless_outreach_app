@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'gmap.dart';
+// import 'dart:js' as js;
+// import 'dart:html' as html;
 
-final maps = dotenv.env['GOOGLE_MAPS_API_KEY'];
 
-void main() {
+
+
+void main() async {
   /// entry point of our whole program so it must always be defined if you want to render something on the screen, can use arrow notation///
   /// running runApp inside main() function, makes MyApp() root of widget tree (renders widget, and widget's children///
   /// everything in Flutter is a widget, and each one can have its own set of properties and child widgets ///
   /// Stateful widget: manages its own internal state and keeps track of it.///
   /// Stateless widget: while this kind of widget doesn’t manage its own internal state. For example a button.///
 
+  //To expone the dart variable to global js code
+  // js.context["my_dart_var"] = mapsApi;
+  //Custom DOM event to signal to js the execution of the dart code
+  // html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
+  await dotenv.load();
+  var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
+  final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x&callback=initMap";
+  // print(mapsApi);
   runApp(const MyApp());
 }
 
@@ -95,6 +106,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Charis SIL Regular', fontSize: 20.0);
 
   void _goHome() {
+
     /// widget that builds the homepage ~ not the login page ///
     Navigator.of(context).push(
       ///the Navigator manages a stack containing the app's routes. Pushing a route onto the Navigator's stack updates the display to that route. ///
@@ -284,5 +296,5 @@ class NavMainPage extends StatelessWidget {
 
 /// Future things to do
 /// 1. Refractor the NavMainPage so that I don't repeat so much code
-/// 2. Put classes into seperate folders and import as approrpiate
+/// 2. Put classes into seperate folders and import as appropriate
 /// 

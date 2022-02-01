@@ -9,6 +9,8 @@
 .history
 .svn/
 *.env
+*.dotenv
+.web/index.html
 
 # IntelliJ related
 *.iml

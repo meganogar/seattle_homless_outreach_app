@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 class Gmap extends StatefulWidget {
   const Gmap({ Key? key }) : super(key: key);
@@ -20,11 +20,10 @@ late GoogleMapController mapController;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('SHO Sample App'),
-          backgroundColor: Color.fromRGBO(134,201,210, .9),
+          title: const Text('SHO Encampment Map'),
+          // backgroundColor: Color.fromRGBO(134,201,210, .9),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
@@ -33,7 +32,6 @@ late GoogleMapController mapController;
             zoom: 13.0,
           ),
         ),
-      ),
-    );
+      );
   }
 }
