@@ -10,7 +10,7 @@
 .svn/
 *.env
 *.dotenv
-.web/index.html
+/web/index.html
 
 # IntelliJ related
 *.iml
