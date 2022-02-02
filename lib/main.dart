@@ -23,7 +23,7 @@ void main() async {
   await dotenv.load();
   var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
   final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x&callback=initMap";
-  // print(mapsApi);
+  print(mapsApi);
   runApp(const MyApp());
 }
 
