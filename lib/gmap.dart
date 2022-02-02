@@ -23,7 +23,6 @@ late GoogleMapController mapController;
     return Scaffold(
         appBar: AppBar(
           title: const Text('SHO Encampment Map'),
-          // backgroundColor: Color.fromRGBO(134,201,210, .9),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
