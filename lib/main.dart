@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'gmap.dart';
+import 'showmultmarkers.dart';
 // import 'dart:js' as js;
 // import 'dart:html' as html;
 
@@ -257,7 +258,12 @@ class NavMainPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyMaps()),
+                      );
+                    },
                     child: Text('Special Requests'),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
