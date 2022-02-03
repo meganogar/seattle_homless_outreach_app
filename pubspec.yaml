@@ -95,6 +95,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/logotrrans.png
+    - assets/images/asset_2.png
     - .env
 
   
