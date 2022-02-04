@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +9,14 @@ import 'showmultmarkers.dart';
 // import 'dart:js' as js;
 // import 'dart:html' as html;
 
+void createScriptElement(mapsApi) {
 
+  ScriptElement script = ScriptElement();
+  script.src = mapsApi;
+  script.id = "super-script";
+
+  document.head?.append(script);
+}
 
 
 void main() async {
@@ -24,7 +33,9 @@ void main() async {
   await dotenv.load();
   var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
   final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x&callback=initMap";
-  print(mapsApi);
+
+  createScriptElement(mapsApi);
+
   runApp(const MyApp());
 }
 
