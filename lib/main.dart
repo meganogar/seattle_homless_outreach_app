@@ -263,7 +263,7 @@ class NavMainPage extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  ListTile(),
+                  SizedBox(height: 45.0),
                   ListTile(
                     title: ElevatedButton(
                       onPressed: () {
