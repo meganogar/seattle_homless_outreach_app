@@ -97,7 +97,7 @@ class _GmapState extends State<Gmap> {
     // Sets the myIcon bitmapdescriptor as a customized asset image, waits for the image to load
     // then it defines it as an icon
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(48, 38)), 'assets/images/asset_2.png')
+        ImageConfiguration(size: Size(48, 35)), 'assets/images/asset_2.png')
         .then((onValue) {
           myIcon = onValue;
         }
