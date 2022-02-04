@@ -52,9 +52,35 @@ class _GmapState extends State<Gmap> {
 
   int idCounter = 1;
   
+  void _modalButtonTap () {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text('Modal BottomSheet'),
+                ElevatedButton(
+                  // API Call to database
+                  child: const Text('Close BottomSheet'),
+                  onPressed: () => Navigator.pop(context),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   Future _addMarkerLongPressed(LatLng latlang) async {
   ///function to add a marker on a long press in map.
+  
+  // API call to database
 
     setState(() {
 
@@ -70,7 +96,7 @@ class _GmapState extends State<Gmap> {
             title: "Encampment #${idCounter}",
             snippet: 'This looks good',
             onTap: () {
-              
+              _modalButtonTap();
             },
         ),
         icon: myIcon,
@@ -125,6 +151,7 @@ class _GmapState extends State<Gmap> {
             zoom: 13.0,
           ),
           onLongPress: (latlang) {
+
             _addMarkerLongPressed(latlang); //we will call this function when pressed on the map to set new marker
         },
           markers: Set<Marker>.of(markers.values),

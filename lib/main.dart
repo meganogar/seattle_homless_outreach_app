@@ -306,7 +306,7 @@ class NavMainPage extends StatelessWidget {
                   ),
                   ListTile(
                     title: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.pop(context),
                       child: Text('Logout'),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
