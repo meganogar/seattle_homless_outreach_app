@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
+import 'dart:math';
 
 
 class Gmap extends StatefulWidget {
@@ -49,6 +50,36 @@ class _GmapState extends State<Gmap> {
     );
   }
 
+  int idCounter = 1;
+  
+
+  Future _addMarkerLongPressed(LatLng latlang) async {
+  ///function to add a marker on a long press in map.
+
+    setState(() {
+
+    idCounter += 1;
+
+    final MarkerId markerId = MarkerId("${idCounter}");
+
+    Marker marker = Marker(
+        markerId: markerId,
+        draggable: true,
+        position: latlang, //With this parameter you automatically obtain latitude and longitude
+        infoWindow: InfoWindow(
+            title: "Encampment #${idCounter}",
+            snippet: 'This looks good',
+            onTap: () {},
+        ),
+        icon: myIcon,
+    );
+
+    markers[markerId] = marker;
+    });
+
+
+  }
+
   // initializes a markers hash table that is made up of a MarkerId
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
@@ -82,13 +113,19 @@ class _GmapState extends State<Gmap> {
           title: const Text('SHO Encampment Map'),
         ),
         body: GoogleMap(
-          markers: Set<Marker>.of(markers.values),
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
           onMapCreated: _onMapCreated,
+          compassEnabled: true,
+          tiltGesturesEnabled: false,
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 13.0,
-            
           ),
+          onLongPress: (latlang) {
+            _addMarkerLongPressed(latlang); //we will call this function when pressed on the map to set new marker
+        },
+          markers: Set<Marker>.of(markers.values),
         ),
       );
   }
