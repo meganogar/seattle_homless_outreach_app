@@ -69,7 +69,9 @@ class _GmapState extends State<Gmap> {
         infoWindow: InfoWindow(
             title: "Encampment #${idCounter}",
             snippet: 'This looks good',
-            onTap: () {},
+            onTap: () {
+              
+            },
         ),
         icon: myIcon,
     );
