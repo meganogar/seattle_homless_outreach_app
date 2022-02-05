@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'dart:math';
 
+import 'encampment_pin_form.dart';
+
 
 class Gmap extends StatefulWidget {
   const Gmap({ Key? key }) : super(key: key);
@@ -57,18 +59,13 @@ class _GmapState extends State<Gmap> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 200,
+          height: 311,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('Modal BottomSheet'),
-                ElevatedButton(
-                  // API Call to database
-                  child: const Text('Close BottomSheet'),
-                  onPressed: () => Navigator.pop(context),
-                )
+              children: <Widget>[ 
+                EncampmentPinForm(),
               ],
             ),
           ),
@@ -159,3 +156,4 @@ class _GmapState extends State<Gmap> {
       );
   }
 }
+

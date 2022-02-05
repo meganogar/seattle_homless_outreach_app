@@ -117,27 +117,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
   /// defines the custom font to apply in app UI ///
   TextStyle style = TextStyle(fontFamily: 'Charis SIL Regular', fontSize: 20.0);
 
-  void _goHome() {
-
-    /// widget that builds the homepage ~ not the login page ///
-    Navigator.of(context).push(
-      ///the Navigator manages a stack containing the app's routes. Pushing a route onto the Navigator's stack updates the display to that route. ///
-      ///Popping a route from the Navigator's stack returns the display to the previous route. ///
-      MaterialPageRoute<void>(
-        builder: (context) {
-
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Seattle Homless Outreach App'),
-            ),
-            body: const Center(
-              child: Text('Hello World\nDouble'),
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   @override
   ///override the build function that returns our main widget///
@@ -146,7 +125,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     ///define our UI elements///
     ///final keyword simply tells our app that the object value won’t be modified throughout the app ///
 
-    final emailField = TextField(
+    final emailField = TextFormField(
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -156,7 +135,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       obscureText: true,  ///hide the value of the input ///
       style: style,
       decoration: InputDecoration(
@@ -249,9 +228,7 @@ class NavMainPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(36.0),
             child: SingleChildScrollView(
-              child:
-            
-              Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
