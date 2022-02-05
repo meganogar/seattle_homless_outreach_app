@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
+
 import 'dart:async';
 import 'dart:math';
 
@@ -39,7 +42,6 @@ class _GmapState extends State<Gmap> {
       infoWindow: InfoWindow(
         title: "Seattle",
         onTap: (){
-
 
         },snippet: "Seattle"
       )
@@ -111,10 +113,13 @@ class _GmapState extends State<Gmap> {
   // defines myIcon variable as a bitmap Decriptor
   late BitmapDescriptor myIcon;
   
+
   @override
 
   // Called when this object is inserted into the tree, overrides the initial, inherited state
   void initState() {
+
+
     super.initState();
 
     // Sets the myIcon bitmapdescriptor as a customized asset image, waits for the image to load

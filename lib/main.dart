@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'gmap.dart';
 import 'showmultmarkers.dart';
+
 // import 'dart:js' as js;
 // import 'dart:html' as html;
 
@@ -305,3 +306,4 @@ class NavMainPage extends StatelessWidget {
 /// 1. Refractor the NavMainPage so that I don't repeat so much code
 /// 2. Put classes into seperate folders and import as appropriate
 /// 3. Validate the inputs to the encampment_pin_form to make sure they are a number
+/// 4. Work on showing current location
