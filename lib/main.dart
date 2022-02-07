@@ -16,6 +16,7 @@ import 'fire_auth.dart';
 import 'validator.dart';
 import 'register_page.dart';
 import 'profile_page.dart';
+import 'main_nav_page.dart';
 
 // import 'dart:js' as js;
 // import 'dart:html' as html;
@@ -46,7 +47,7 @@ void main() async {
   // html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   await dotenv.load();
   var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
-  final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x&callback=initMap";
+  final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x"; //&callback=initMap
 
   createScriptElement(mapsApi);
 
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: colorCustom,
       ),
-      home: const MyLoginPage(title: 'Seattle Homeless Outreach App'),
+      home: MyLoginPage(title: 'Seattle Homeless Outreach App'),
     );
   }
 }
@@ -148,7 +149,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
       if (user != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => ProfilePage(
+            builder: (context) => MainNavPage(
               user: user,
             ),
           ),
@@ -236,7 +237,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   .pushReplacement(
                 MaterialPageRoute(
                   builder: (context) =>
-                      ProfilePage(user: user),
+                      MainNavPage(user: user),
                 ),
               );
             }
@@ -382,102 +383,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
         ),
       ),
     );
-  }
-}
-
-class NavMainPage extends StatelessWidget {
-      /// widget that builds the homepage ~ not the login page ///
-  const NavMainPage({ Key? key }) : super(key: key);
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Seattle Homless Outreach App'),
-        ),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    ///Widget to help with spacing, allows us to define height of image///
-                    height: 300.0,
-                    child: Image.asset(
-                      "assets/images/logotrrans.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SizedBox(height: 45.0),
-                  ListTile(
-                    title: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Gmap()),
-                        );
-                      },
-                      child: Text('Encampment Data'),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                        textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  ListTile(
-                    title: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyMaps()),
-                        );
-                      },
-                      child: Text('Special Requests'),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                        textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  ListTile(
-                    title: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Pending'),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                        textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  ListTile(
-                    title: ElevatedButton(
-                      onPressed: () async {
-                        FirebaseAuth.instance.signOut();
-
-                        () => Navigator.pop(context);
-
-                      },
-                      child: Text('Logout'),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                        textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  ]
-                ),
-            )
-          )
-    )
-  )
-  );
   }
 }
 

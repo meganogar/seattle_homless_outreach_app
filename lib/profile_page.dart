@@ -1,30 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'gmap.dart';
-import 'showmultmarkers.dart';
-
 import 'fire_auth.dart';
-import 'validator.dart';
-import 'register_page.dart';
+
 
 import 'main.dart';
+import 'main_nav_page.dart';
 
 
 class ProfilePage extends StatefulWidget {
   final User user;
 
-  const ProfilePage({required this.user});
+  const ProfilePage({ Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -41,6 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
     _currentUser = widget.user;
     super.initState();
   }
+
+  // sendMainNavPage() {
+  //   Navigator.push(
+  //         ///the Navigator manages a stack containing the app's routes. Pushing a route onto the Navigator's stack updates the display to that route. ///
+  //         ///Popping a route from the Navigator's stack returns the display to the previous route. ///
+  //           context,
+  //           MaterialPageRoute(builder: (context) => MainNavPage()),
+  //         );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 16.0),
             _currentUser.emailVerified
-                ? Text(
+                ? 
+                  Text(
                     'Email verified',
                     style: Theme.of(context)
                         .textTheme
@@ -123,12 +120,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         _isSigningOut = false;
                       });
 
-                      () => Navigator.pop(context);
-                      // Navigator.of(context).pushReplacement(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => LoginPage(),
-                      //   ),
-                      // );
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => MyLoginPage(title: 'Seattle Homeless Outreach App'),
+                        ),
+                      );
                     },
                     child: Text('Sign out'),
                     style: ElevatedButton.styleFrom(
