@@ -4,11 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'gmap.dart';
 import 'showmultmarkers.dart';
 
+import 'fire_auth.dart';
+import 'validator.dart';
+import 'register_page.dart';
+import 'profile_page.dart';
+
 // import 'dart:js' as js;
 // import 'dart:html' as html;
+
+// this allows you to interact with Firebase Auth using the default Firebase App 
+FirebaseAuth auth = FirebaseAuth.instance;
 
 void createScriptElement(mapsApi) {
 
@@ -36,6 +49,11 @@ void main() async {
   final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x&callback=initMap";
 
   createScriptElement(mapsApi);
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MyApp());
 }
@@ -114,6 +132,31 @@ class _MyLoginPageState extends State<MyLoginPage> {
   //   });
   // }
 
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+
+  bool _isProcessing = false;
+
+  Future<FirebaseApp> _initializeFirebase() async {
+      FirebaseApp firebaseApp = await Firebase.initializeApp();
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ProfilePage(
+              user: user,
+            ),
+          ),
+        );
+      }
+      return firebaseApp;
+  }
+
 
   /// defines the custom font to apply in app UI ///
   TextStyle style = TextStyle(fontFamily: 'Charis SIL Regular', fontSize: 20.0);
@@ -129,6 +172,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
     final emailField = TextFormField(
       obscureText: false,
       style: style,
+
+      controller: _emailTextController,
+      focusNode: _focusEmail,
+      validator: (value) => Validator.validateEmail(email: value!),
+
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
@@ -139,6 +187,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
     final passwordField = TextFormField(
       obscureText: true,  ///hide the value of the input ///
       style: style,
+
+      controller: _passwordTextController,
+      focusNode: _focusPassword,
+      validator: (value) => Validator.validatePassword(password: value!),
+
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
@@ -155,21 +208,107 @@ class _MyLoginPageState extends State<MyLoginPage> {
         ///child to Material Widget, adds the button, below takes text feature as a child///
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          Navigator.push(
-          ///the Navigator manages a stack containing the app's routes. Pushing a route onto the Navigator's stack updates the display to that route. ///
-          ///Popping a route from the Navigator's stack returns the display to the previous route. ///
-            context,
-            MaterialPageRoute(builder: (context) => const NavMainPage()),
-          );
-        }, ///event listener, calls NavMainPage (stateful widget) in the state app///
+
+
+        onPressed: () async {
+          _focusEmail.unfocus();
+          _focusPassword.unfocus();
+
+          if (_formKey.currentState!
+              .validate()) {
+            setState(() {
+              _isProcessing = true;
+            });
+
+            User? user = await FireAuth
+                .signInUsingEmailPassword(
+              email: _emailTextController.text,
+              password:
+                  _passwordTextController.text,
+            );
+
+            setState(() {
+              _isProcessing = false;
+            });
+
+            if (user != null) {
+              Navigator.of(context)
+                  .pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ProfilePage(user: user),
+                ),
+              );
+            }
+          }
+        },
+
+
+        ///event listener, calls NavMainPage (stateful widget) in the state app///
         child: Text("Login",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
-    
+
+    final registerButton = Material(
+      ///material widget gives us easier access to aesthetic features///
+      elevation: 5.0, ///adds a shadow///
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color.fromRGBO(190, 32, 46, 1),
+      child: MaterialButton(
+        ///child to Material Widget, adds the button, below takes text feature as a child///
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => RegisterPage()),
+          );
+        }, ///event listener, calls NavMainPage (stateful widget) in the state app///
+
+        child: Text("Register",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    Future<User?> signInUsingEmailPassword({
+      required String email,
+      required String password,
+      required BuildContext context,
+    }) async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      User? user;
+
+      try {
+        UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        user = userCredential.user;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided.');
+        }
+      }
+
+      return user;
+    }
+
+    Future<User?> refreshUser(User user) async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+
+      await user.reload();
+      User? refreshedUser = auth.currentUser;
+
+      return refreshedUser;
+    }
+
     return Scaffold(
       ///put our widgets together in Scaffold widget ///
       ///let you implement the material standard app widgets that most application has: AppBar, BottomAppBar, FloatingActionButton, BottomSheet, Drawer, Snackbar///
@@ -178,31 +317,66 @@ class _MyLoginPageState extends State<MyLoginPage> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column(
-              /// Column widget allows us to align form elements vertically ///
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  ///Widget to help with spacing, allows us to define height of image///
-                  height: 300.0,
-                  child: Image.asset(
-                    "assets/images/logotrrans.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 45.0),
-                emailField,
-                SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                loginButon,
-                SizedBox(
-                  height: 15.0,
-                ),
-              ],
+
+            child: FutureBuilder(
+              future: _initializeFirebase(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+
+                  return Column(
+                    /// Column widget allows us to align form elements vertically ///
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        ///Widget to help with spacing, allows us to define height of image///
+                        height: 300.0,
+                        child: Image.asset(
+                          "assets/images/logotrrans.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+
+                      SizedBox(height: 45.0),
+                      
+
+                      Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                                  
+                          emailField,
+                          SizedBox(height: 25.0),
+                          passwordField,
+                          SizedBox(height: 35.0,),
+
+                          _isProcessing
+                              ? CircularProgressIndicator()
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: loginButon,
+                                    ),
+                                    SizedBox(width: 24.0),
+                                    Expanded(
+                                      child: registerButton,
+                                    ),
+                                  ],
+                                )
+                        ],
+                      ),
+                    )
+
+
+                    ],
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ),
@@ -284,7 +458,12 @@ class NavMainPage extends StatelessWidget {
                   ),
                   ListTile(
                     title: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () async {
+                        FirebaseAuth.instance.signOut();
+
+                        () => Navigator.pop(context);
+
+                      },
                       child: Text('Logout'),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
