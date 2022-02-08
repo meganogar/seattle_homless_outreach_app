@@ -12,6 +12,7 @@
 *.dotenv
 /web/index.html
 /lib/firebase_options.dart
+node_modules
 
 # IntelliJ related
 *.iml
