@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 import 'fire_auth.dart';
 import 'gmap.dart';
@@ -17,12 +16,13 @@ import 'fire_auth.dart';
 
 import 'main.dart';
 import 'main_nav_page.dart';
+import 'login_page.dart';
 
 
 class MainNavPage extends StatefulWidget {
   final User user;
   const MainNavPage({ Key? key, required this.user }) : super(key: key);
-
+  
 
   @override
   _MainNavPageState createState() => _MainNavPageState();
@@ -31,6 +31,8 @@ class MainNavPage extends StatefulWidget {
 class _MainNavPageState extends State<MainNavPage> {
 
   late User _currentUser;
+
+  TextStyle style = TextStyle(fontFamily: 'Charis SIL Regular', fontSize: 20.0);
 
   @override
   void initState() {
@@ -62,7 +64,7 @@ class _MainNavPageState extends State<MainNavPage> {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  SizedBox(height: 45.0),
+                  SizedBox(height: 30.0),
                   ListTile(
                     title: ElevatedButton(
                       onPressed: () {
@@ -75,7 +77,7 @@ class _MainNavPageState extends State<MainNavPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
                         textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            style.copyWith(fontSize: 17)),
                     ),
                   ),
                   ListTile(
@@ -90,7 +92,7 @@ class _MainNavPageState extends State<MainNavPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
                         textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            style.copyWith(fontSize: 17)),
                     ),
                   ),
                   ListTile(
@@ -105,7 +107,7 @@ class _MainNavPageState extends State<MainNavPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
                         textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            style.copyWith(fontSize: 17)),
                     ),
                   ),
                   ListTile(
@@ -124,7 +126,7 @@ class _MainNavPageState extends State<MainNavPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
                         textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            style.copyWith(fontSize: 17)),
                     ),
                   ),
                   ]

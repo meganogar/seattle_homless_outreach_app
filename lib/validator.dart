@@ -3,6 +3,9 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Validator {
+  ///alidators will help to check whether the user has entered any 
+  ///inappropriate value in a specific field and show an error accordingly
+  
   static String? validateName({required String name}) {
     if (name == null) {
       return null;
@@ -15,6 +18,7 @@ class Validator {
   }
 
   static String? validateEmail({required String email}) {
+    //checks that given email is valid, if not valid email, doesn't go through
     if (email == null) {
       return null;
     }
@@ -31,6 +35,7 @@ class Validator {
   }
 
   static String? validatePassword({required String password}) {
+    //checks that the password is a greater than 6, firebase doesn't allow passwords less than six
     if (password == null) {
       return null;
     }

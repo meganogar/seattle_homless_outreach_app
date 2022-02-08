@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'fire_auth.dart';
 
-
-import 'main.dart';
-import 'main_nav_page.dart';
+import 'login_page.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -22,21 +20,13 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isSigningOut = false;
 
   late User _currentUser;
+  TextStyle style = TextStyle(fontFamily: 'Charis SIL Regular', fontSize: 20.0);
 
   @override
   void initState() {
     _currentUser = widget.user;
     super.initState();
   }
-
-  // sendMainNavPage() {
-  //   Navigator.push(
-  //         ///the Navigator manages a stack containing the app's routes. Pushing a route onto the Navigator's stack updates the display to that route. ///
-  //         ///Popping a route from the Navigator's stack returns the display to the previous route. ///
-  //           context,
-  //           MaterialPageRoute(builder: (context) => MainNavPage()),
-  //         );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +39,13 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'NAME: ${_currentUser.displayName}',
-              style: Theme.of(context).textTheme.bodyText1,
+              'Name: ${_currentUser.displayName}',
+              style: style.copyWith(fontSize: 17),
             ),
             SizedBox(height: 16.0),
             Text(
-              'EMAIL: ${_currentUser.email}',
-              style: Theme.of(context).textTheme.bodyText1,
+              'Email: ${_currentUser.email}',
+              style: style.copyWith(fontSize: 17),
             ),
             SizedBox(height: 16.0),
             _currentUser.emailVerified
@@ -72,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
-                        .copyWith(color: Colors.red),
+                        .copyWith(color: Color.fromRGBO(190, 32, 46, 1)),
                   ),
             SizedBox(height: 16.0),
             _isSendingVerification
@@ -85,12 +75,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           setState(() {
                             _isSendingVerification = true;
                           });
-                          await _currentUser.sendEmailVerification();
+                          await _currentUser.sendEmailVerification(); //built in method to verify email for current user
                           setState(() {
                             _isSendingVerification = false;
                           });
                         },
                         child: Text('Verify email'),
+                        style: ElevatedButton.styleFrom(
+                          textStyle: style.copyWith(fontSize: 17),
+                          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                        
+                        
                       ),
                       SizedBox(width: 8.0),
                       IconButton(
@@ -110,7 +109,10 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 16.0),
             _isSigningOut
                 ? CircularProgressIndicator()
-                : ElevatedButton(
+                : 
+                
+                
+                ElevatedButton(
                     onPressed: () async {
                       setState(() {
                         _isSigningOut = true;
@@ -128,7 +130,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     child: Text('Sign out'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
+                      textStyle: style.copyWith(fontSize: 17),
+                      padding: EdgeInsets.fromLTRB(35.0, 15.0, 35.0, 15.0),
+                      primary: Color.fromRGBO(190, 32, 46, 1),
+                      onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
