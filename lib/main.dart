@@ -105,3 +105,6 @@ class MyApp extends StatelessWidget {
 /// 2. Put classes into seperate folders and import as appropriate
 /// 3. Validate the inputs to the encampment_pin_form to make sure they are a number
 /// 4. Work on showing current location
+/// 5. Update the login authentication so that when you enter a wrong password there is a message sent to user
+/// 6. Update the registration page so that if you don't have valid inpu you don't just get the doom spin 4eva
+/// 

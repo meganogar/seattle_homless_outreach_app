@@ -47,4 +47,25 @@ class Validator {
 
     return null;
   }
+
+  static String? validateNumber({required String input}) {
+    //
+    if (input == null || input.isEmpty) {
+      return 'Please enter some text';
+    } 
+    // else if (isNumeric(input) != true) {
+    //   return 'Please enter a number';
+    // }
+
+    return null;
+  }
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+      return double.tryParse(s) != null;
+  }
+
+  
 }
