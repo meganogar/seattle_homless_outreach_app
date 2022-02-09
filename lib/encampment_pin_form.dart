@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'gmap.dart';
+
 
 import 'validator.dart';
 
 class EncampmentPinForm extends StatefulWidget {
+  final Camp camp;
 
-
-  const EncampmentPinForm({ Key? key }) : super(key: key);
+  const EncampmentPinForm({ Key? key , required this.camp}) : super(key: key);
 
   
 
@@ -35,13 +39,31 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
 
   var today = DateFormat.yMMMd().format(DateTime.now());
 
+  late Camp camp;
+
+  
+  
+  final _refTents = FirebaseDatabase.instance.ref("Tents");
+  final _refBags = FirebaseDatabase.instance.ref("Bags");
+  final _refDate = FirebaseDatabase.instance.ref("Date");
+  final _refId = FirebaseDatabase.instance.ref("Id");
+
+
+
+  @override
+  void initState() {
+    camp = widget.camp;
+    super.initState();
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     
-    final _refTents = FirebaseDatabase.instance.ref("Tents");
-    final _refBags = FirebaseDatabase.instance.ref("Bags");
-    final _refDate = FirebaseDatabase.instance.ref("Date");
+    final _refCamp = FirebaseDatabase.instance.ref("Camp_${camp.id}");
+
+
 
     return Container(
       child: Padding(
@@ -96,12 +118,16 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                         //   const SnackBar(content: Text('Processing Data')),
                         // );
 
-                        print(_tentsTextController.text);
-                        print(_bagsTextController.text);
-                        print(today);
-                        _refTents.set(_tentsTextController.text);
-                        _refBags.set(_bagsTextController.text);
-                        _refDate.set(today);
+
+                        _refCamp.set({
+                          'tents': _tentsTextController.text, 
+                          'bags': _bagsTextController.text, 
+                          'date': today, 
+                          'user_id': FirebaseAuth.instance.currentUser!.uid,
+                          'user': FirebaseAuth.instance.currentUser!.displayName
+                        });
+
+
                       }
                     },
                     child: const Text('Send Data'),
@@ -122,3 +148,6 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
     super.dispose();
   }
 }
+
+final databaseRef = FirebaseDatabase.instance.ref(); //database reference object
+

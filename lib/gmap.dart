@@ -11,6 +11,11 @@ import 'encampment_pin_form.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 
+class Camp {
+  final int id;
+
+  Camp(this.id);
+}
 
 class Gmap extends StatefulWidget {
   const Gmap({ Key? key }) : super(key: key);
@@ -59,7 +64,8 @@ class _GmapState extends State<Gmap> {
 
   int idCounter = 1;
   
-  void _modalButtonTap () {
+  void _modalButtonTap (camp) {
+
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -70,7 +76,7 @@ class _GmapState extends State<Gmap> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[ 
-                EncampmentPinForm(campId: idCounter),
+                EncampmentPinForm(camp: camp),
               ],
             ),
           ),
@@ -86,19 +92,19 @@ class _GmapState extends State<Gmap> {
 
     setState(() {
 
-    idCounter += 1;
+    final MarkerId markerId = MarkerId("$idCounter");
 
-    final MarkerId markerId = MarkerId("${idCounter}");
+    var camp = Camp(idCounter);
 
     Marker marker = Marker(
         markerId: markerId,
         draggable: true,
         position: latlang, //With this parameter you automatically obtain latitude and longitude
         infoWindow: InfoWindow(
-            title: "Encampment #${idCounter}",
+            title: "Encampment #$idCounter",
             snippet: 'This looks good',
             onTap: () {
-              _modalButtonTap();
+              _modalButtonTap(camp);
             },
         ),
         icon: myIcon,
@@ -107,6 +113,7 @@ class _GmapState extends State<Gmap> {
     markers[markerId] = marker;
     });
 
+    idCounter += 1;
 
   }
 
