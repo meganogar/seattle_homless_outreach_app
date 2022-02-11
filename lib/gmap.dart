@@ -22,7 +22,7 @@ class Camp {
 class Gmap extends StatefulWidget {
   const Gmap({ Key? key }) : super(key: key);
 
-  @override
+@override
   _GmapState createState() => _GmapState();
 }
 
@@ -62,10 +62,7 @@ class _GmapState extends State<Gmap> {
       print('***************');
       campMap.forEach((key, value) {
 
-
-        setState(() {
-
-          final MarkerId markerId = MarkerId("${value['markerId']}");
+        final MarkerId markerId = MarkerId("${value['markerId']}");
 
           int campId = value['markerId'];
 
@@ -85,6 +82,8 @@ class _GmapState extends State<Gmap> {
               icon: myIcon,
           );
 
+
+        setState(() {
           markers[markerId] = marker;
         });
       });
@@ -137,6 +136,8 @@ class _GmapState extends State<Gmap> {
       },
     );
   }
+  
+
   int idCounter3 = 0;
 
   Future _addMarkerLongPressed(LatLng latlang) async {
@@ -144,9 +145,23 @@ class _GmapState extends State<Gmap> {
   
   // API call to database
 
-    setState(() {
+    final _campCounter = FirebaseDatabase.instance.ref("CampCounter");
+    print('1');
+    int count = await _campCounter.once().then((event) {
+      int count = event.snapshot.value as int;
+      print('1.5');
+      return count;
+
+    },);
+    print('2');
+
+
+    int idCounter3 = count;
+
+    setState(() async {
 
       idCounter3 += 1;
+      await _campCounter.set(idCounter3);
 
       final _refCamp = FirebaseDatabase.instance.ref("Camps/Camp_$idCounter3");
 
@@ -170,7 +185,7 @@ class _GmapState extends State<Gmap> {
 
       // markers[markerId] = marker;
 
-      _refCamp.set({
+      await _refCamp.set({
         'markerId': idCounter3,
         'latitude': latlang.latitude,
         'longitude': latlang.longitude
@@ -230,6 +245,7 @@ class _GmapState extends State<Gmap> {
             zoom: 13.0,
           ),
           onLongPress: (latlang) {
+
             _addMarkerLongPressed(latlang); 
             //we will call this function when pressed on the map to set new marker
         },
