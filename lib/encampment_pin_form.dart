@@ -38,17 +38,9 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
   final database = FirebaseDatabase.instance;
 
   var today = DateFormat.yMMMd().format(DateTime.now());
+  var dateTimeToday = DateFormat.Hms().format(DateTime.now());
 
   late Camp camp;
-
-  
-  
-  final _refTents = FirebaseDatabase.instance.ref("Tents");
-  final _refBags = FirebaseDatabase.instance.ref("Bags");
-  final _refDate = FirebaseDatabase.instance.ref("Date");
-  final _refId = FirebaseDatabase.instance.ref("Id");
-
-
 
   @override
   void initState() {
@@ -61,9 +53,7 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     
-    final _refCamp = FirebaseDatabase.instance.ref("Camp_${camp.id}");
-
-
+    final _refCamp = FirebaseDatabase.instance.ref("Camps/Camp_${camp.id}/Outreaches/");
 
     return Container(
       child: Padding(
@@ -110,6 +100,8 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                       _focusTents.unfocus();
                       _focusBags.unfocus();
 
+                      print(dateTimeToday);
+
                       if (_formKey.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
@@ -119,10 +111,11 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                         // );
 
 
-                        _refCamp.set({
+                        _refCamp.push().set({
                           'tents': _tentsTextController.text, 
                           'bags': _bagsTextController.text, 
                           'date': today, 
+                          'datetime': dateTimeToday,
                           'user_id': FirebaseAuth.instance.currentUser!.uid,
                           'user': FirebaseAuth.instance.currentUser!.displayName
                         });

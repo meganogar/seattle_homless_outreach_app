@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -27,15 +29,67 @@ class Gmap extends StatefulWidget {
 class _GmapState extends State<Gmap> {
 
   late GoogleMapController mapController;
+  final database = FirebaseDatabase.instance;
 
   // defines the starting location "center" for when the map initially loads
   final LatLng _center = const LatLng(47.6062, -122.3321);
 
   // Creates a function to use when map is created by googlemaps
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
 
     // I believe this sets the controls for the map to standard googlemap control functions
     mapController = controller;
+
+    // var ref = FirebaseDatabase.instance.ref("Camps").once().then((snap) {
+    //   // print(snap);
+    //   Map<dynamic, dynamic> campMap = snap.snapshot.value as Map <dynamic, dynamic>;
+    //   print('BLAHBLAHBLAHBLAH');
+    //   campMap.forEach((key, value) {
+    //     print('key = $key'); print('value = $value');
+
+    //       markers[markerId] = marker;
+    //       });
+    //     });
+    // });
+
+    // Get the Stream
+    Stream<DatabaseEvent> stream = FirebaseDatabase.instance.ref("Camps").onValue;
+
+    // Subscribe to the stream!
+    stream.listen((DatabaseEvent event) {
+
+      Map<dynamic, dynamic> campMap =  event.snapshot.value as Map <dynamic, dynamic>;
+      print('***************');
+      campMap.forEach((key, value) {
+
+
+        setState(() {
+
+          final MarkerId markerId = MarkerId("${value['markerId']}");
+
+          int campId = value['markerId'];
+
+          var camp = Camp(campId);
+
+          Marker marker = Marker(
+              markerId: markerId,
+              draggable: false,
+              position: LatLng(value['latitude'], value['longitude']), //With this parameter you automatically obtain latitude and longitude
+              infoWindow: InfoWindow(
+                  title: "Encampment #${value['markerId']}",
+                  snippet: 'This looks good',
+                  onTap: () {
+                    _modalButtonTap(camp);
+                  },
+              ),
+              icon: myIcon,
+          );
+
+          markers[markerId] = marker;
+        });
+      });
+    });
+
 
     // defines markerId1 with a MarkerId of one, done so that I can use this as when I first 
     // create the marker1 marker, and also so that I can add to hash map in state
@@ -55,14 +109,13 @@ class _GmapState extends State<Gmap> {
       )
     );
     
-    // Sets the state of the initial map creation by adding marker1 to the hasmap
+    // Sets the state of the initial map creation by adding marker1 to the hashmap
     setState(() {
       markers[markerId1]=marker1;
       }
     );
   }
 
-  int idCounter = 1;
   
   void _modalButtonTap (camp) {
 
@@ -84,6 +137,7 @@ class _GmapState extends State<Gmap> {
       },
     );
   }
+  int idCounter3 = 0;
 
   Future _addMarkerLongPressed(LatLng latlang) async {
   ///function to add a marker on a long press in map.
@@ -92,29 +146,40 @@ class _GmapState extends State<Gmap> {
 
     setState(() {
 
-    final MarkerId markerId = MarkerId("$idCounter");
+      idCounter3 += 1;
 
-    var camp = Camp(idCounter);
+      final _refCamp = FirebaseDatabase.instance.ref("Camps/Camp_$idCounter3");
 
-    Marker marker = Marker(
-        markerId: markerId,
-        draggable: true,
-        position: latlang, //With this parameter you automatically obtain latitude and longitude
-        infoWindow: InfoWindow(
-            title: "Encampment #$idCounter",
-            snippet: 'This looks good',
-            onTap: () {
-              _modalButtonTap(camp);
-            },
-        ),
-        icon: myIcon,
-    );
+      final MarkerId markerId = MarkerId("$idCounter3");
 
-    markers[markerId] = marker;
+      // var camp = Camp(idCounter3);
+
+      // Marker marker = Marker(
+      //     markerId: markerId,
+      //     draggable: false,
+      //     position: latlang, //With this parameter you automatically obtain latitude and longitude
+      //     infoWindow: InfoWindow(
+      //         title: "Encampment #$idCounter3",
+      //         snippet: 'This looks good',
+      //         onTap: () {
+      //           _modalButtonTap(camp);
+      //         },
+      //     ),
+      //     icon: myIcon,
+      // );
+
+      // markers[markerId] = marker;
+
+      _refCamp.set({
+        'markerId': idCounter3,
+        'latitude': latlang.latitude,
+        'longitude': latlang.longitude
+      });
+
     });
 
-    idCounter += 1;
-
+  
+  // _refCampCounter.set(idCounter);
   }
 
   // initializes a markers hash table that is made up of a MarkerId
@@ -146,6 +211,8 @@ class _GmapState extends State<Gmap> {
 
   @override
 
+  
+
   // Builds the scaffold, defines googleMap as the body
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,8 +230,8 @@ class _GmapState extends State<Gmap> {
             zoom: 13.0,
           ),
           onLongPress: (latlang) {
-
-            _addMarkerLongPressed(latlang); //we will call this function when pressed on the map to set new marker
+            _addMarkerLongPressed(latlang); 
+            //we will call this function when pressed on the map to set new marker
         },
           markers: Set<Marker>.of(markers.values),
         ),
