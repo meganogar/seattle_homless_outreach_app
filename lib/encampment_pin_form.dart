@@ -48,13 +48,13 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
     super.initState();
   }
   
-  
+
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     
-    final _refCamp = FirebaseDatabase.instance.ref("Camps/Camp_${camp.id}/Outreaches/");
+    final _refCamp = FirebaseDatabase.instance.ref("Camps2/${camp.id}/Outreaches/");
 
     return Container(
       child: Padding(

@@ -14,7 +14,7 @@ import 'encampment_pin_form.dart';
 FirebaseDatabase database = FirebaseDatabase.instance;
 
 class Camp {
-  final int id;
+  final dynamic id;
 
   Camp(this.id);
 }
@@ -51,20 +51,23 @@ class _GmapState extends State<Gmap> {
     //       });
     //     });
     // });
-
+    
     // Get the Stream
-    Stream<DatabaseEvent> stream = FirebaseDatabase.instance.ref("Camps").onValue;
+    Stream<DatabaseEvent> stream = FirebaseDatabase.instance.ref("Camps2").onValue;
 
     // Subscribe to the stream!
     stream.listen((DatabaseEvent event) {
+      int counter = 0;
 
       Map<dynamic, dynamic> campMap =  event.snapshot.value as Map <dynamic, dynamic>;
       print('***************');
       campMap.forEach((key, value) {
 
-        final MarkerId markerId = MarkerId("${value['markerId']}");
+        counter ++;
 
-          int campId = value['markerId'];
+        final MarkerId markerId = MarkerId("$key");
+
+          var campId = key;
 
           var camp = Camp(campId);
 
@@ -73,7 +76,7 @@ class _GmapState extends State<Gmap> {
               draggable: false,
               position: LatLng(value['latitude'], value['longitude']), //With this parameter you automatically obtain latitude and longitude
               infoWindow: InfoWindow(
-                  title: "Encampment #${value['markerId']}",
+                  title: "Encampment #$counter",
                   snippet: 'This looks good',
                   onTap: () {
                     _modalButtonTap(camp);
@@ -145,56 +148,20 @@ class _GmapState extends State<Gmap> {
   
   // API call to database
 
-    final _campCounter = FirebaseDatabase.instance.ref("CampCounter");
-    print('1');
-    int count = await _campCounter.once().then((event) {
-      int count = event.snapshot.value as int;
-      print('1.5');
-      return count;
 
-    },);
-    print('2');
+    final _refCamp = FirebaseDatabase.instance.ref("Camps2");
 
+    // setState(() {
 
-    int idCounter3 = count;
-
-    setState(() async {
-
-      idCounter3 += 1;
-      await _campCounter.set(idCounter3);
-
-      final _refCamp = FirebaseDatabase.instance.ref("Camps/Camp_$idCounter3");
-
-      final MarkerId markerId = MarkerId("$idCounter3");
-
-      // var camp = Camp(idCounter3);
-
-      // Marker marker = Marker(
-      //     markerId: markerId,
-      //     draggable: false,
-      //     position: latlang, //With this parameter you automatically obtain latitude and longitude
-      //     infoWindow: InfoWindow(
-      //         title: "Encampment #$idCounter3",
-      //         snippet: 'This looks good',
-      //         onTap: () {
-      //           _modalButtonTap(camp);
-      //         },
-      //     ),
-      //     icon: myIcon,
-      // );
-
-      // markers[markerId] = marker;
-
-      await _refCamp.set({
-        'markerId': idCounter3,
-        'latitude': latlang.latitude,
-        'longitude': latlang.longitude
-      });
-
+    _refCamp.push().set({
+      // 'markerId': idCounter3,
+      'latitude': latlang.latitude,
+      'longitude': latlang.longitude
     });
 
-  
-  // _refCampCounter.set(idCounter);
+    // });
+
+
   }
 
   // initializes a markers hash table that is made up of a MarkerId
