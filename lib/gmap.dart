@@ -60,7 +60,6 @@ class _GmapState extends State<Gmap> {
       int counter = 0;
 
       Map<dynamic, dynamic> campMap =  event.snapshot.value as Map <dynamic, dynamic>;
-      print('***************');
       campMap.forEach((key, value) {
 
         counter ++;
