@@ -1,6 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FireAuth {
   // For registering a new user with email & password and associated them with this user, again, needs to be a future
@@ -42,6 +46,7 @@ class FireAuth {
   static Future<User?> signInUsingEmailPassword({
     required String email,
     required String password,
+    required context,
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
@@ -54,9 +59,40 @@ class FireAuth {
       user = userCredential.user; //associates returned value of firebase to current user
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+
+        showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text('No user found for that email.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      // Close the dialog
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Okay'))
+              ],
+            );
+        });
+
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+        showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text('Wrong password provided.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      // Close the dialog
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Okay'))
+              ],
+            );
+        });
+
       }
     }
 
@@ -73,4 +109,25 @@ class FireAuth {
 
     return refreshedUser;
   }
+
+  
+  void _delete(BuildContext context, errorMessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Okay'))
+            ],
+          );
+    });
+  }
+
 }
