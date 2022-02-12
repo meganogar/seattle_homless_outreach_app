@@ -65,12 +65,9 @@ class _GmapState extends State<Gmap> {
 
     // Subscribe to the stream!
     stream.listen((DatabaseEvent event) {
-      int counter = 0;
 
       Map<dynamic, dynamic> campMap =  event.snapshot.value as Map <dynamic, dynamic>;
       campMap.forEach((key, value) {
-
-        counter ++;
 
         final MarkerId markerId = MarkerId("$key");
 
@@ -88,6 +85,7 @@ class _GmapState extends State<Gmap> {
                   onTap: () {
                     _modalButtonTap(camp);
                   },
+                  
               ),
               icon: myIcon,
           );
@@ -97,6 +95,21 @@ class _GmapState extends State<Gmap> {
           markers[markerId] = marker;
         });
       });
+    });
+
+    Stream<DatabaseEvent> delestream = FirebaseDatabase.instance.ref("CampsTest").onChildRemoved;
+
+    // Subscribe to the stream!
+    delestream.listen((DatabaseEvent event) {
+
+      String deadCamp = event.snapshot.key as String;
+
+      MarkerId markerId1 = MarkerId(deadCamp);
+
+      setState(() {
+        markers.remove(markerId1);
+      });
+
     });
 
 

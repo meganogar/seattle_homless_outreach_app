@@ -42,6 +42,8 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
 
   late Camp camp;
 
+  
+
   @override
   void initState() {
     camp = widget.camp;
@@ -49,12 +51,47 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
   }
   
 
-
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     
     final _refCamp = FirebaseDatabase.instance.ref("CampsTest/${camp.id}/Outreaches/");
+    final _refRemoveCamp = FirebaseDatabase.instance.ref("CampsTest/${camp.id}");
+
+    bool _isShown = true;
+
+  void _delete(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text('Please Confirm Deletion'),
+            content: Text('Only delete this camp if created in error'),
+            actions: [
+              // The "Yes" button
+              TextButton(
+                  onPressed: () {
+                    // Remove the box
+                    _refRemoveCamp.remove();
+                    setState(() {
+                      _isShown = false;
+                    });
+
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Delete')),
+              TextButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Nevermind'))
+            ],
+          );
+    });
+  }
+
 
     return Container(
       child: Padding(
@@ -96,7 +133,7 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                   SizedBox(height: 10.0),
                   ElevatedButton(
                           // API Call to database
-                    onPressed: () {
+                    onPressed: () async {
                       // Validate returns true if the form is valid, or false otherwise.
                       _focusTents.unfocus();
                       _focusBags.unfocus();
@@ -109,8 +146,7 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                         //   const SnackBar(content: Text('Processing Data')),
                         // );
 
-
-                        _refCamp.push().set({
+                        await _refCamp.push().set({
                           'tents': _tentsTextController.text, 
                           'bags': _bagsTextController.text, 
                           'date': today, 
@@ -118,12 +154,14 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                           'user_id': FirebaseAuth.instance.currentUser!.uid,
                           'user': FirebaseAuth.instance.currentUser!.displayName
                         });
-
-
                       }
                     },
                     child: const Text('Send Data'),
-                  )
+                  ),
+                  SizedBox(height: 10.0),
+                  ElevatedButton(
+                    onPressed: _isShown == true ? () => _delete(context) : null,
+                    child: const Text('Delete Camp?'))
                 ],
               ),
             )
