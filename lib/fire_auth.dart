@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FireAuth {
   // For registering a new user with email & password and associated them with this user, again, needs to be a future
   // since it makes a call to firebase
-  
+
   static Future<User?> registerUsingEmailPassword({
     required String name,
     required String email,
@@ -65,14 +65,14 @@ class FireAuth {
           builder: (BuildContext ctx) {
             return AlertDialog(
               title: Text('No user found for that email.'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      // Close the dialog
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Okay'))
-              ],
+              // actions: [
+              //   TextButton(
+              //       onPressed: () {
+              //         // Close the dialog
+              //         Navigator.of(context).pop();
+              //       },
+              //       child: const Text('Okay'))
+              // ],
             );
         });
 
@@ -84,11 +84,12 @@ class FireAuth {
               title: Text('Wrong password provided.'),
               actions: [
                 TextButton(
-                    onPressed: () {
-                      // Close the dialog
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Okay'))
+                  onPressed: () async {
+                    await auth.sendPasswordResetEmail(email: email);
+                    Navigator.of(context).pop();
+                  }, 
+                  child: const Text('Send password reset to my email.')),
+                
               ],
             );
         });
@@ -108,26 +109,6 @@ class FireAuth {
     User? refreshedUser = auth.currentUser;
 
     return refreshedUser;
-  }
-
-  
-  void _delete(BuildContext context, errorMessage) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(errorMessage),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    // Close the dialog
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Okay'))
-            ],
-          );
-    });
   }
 
 }
