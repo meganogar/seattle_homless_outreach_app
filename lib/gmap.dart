@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'encampment_pin_form.dart';
+import 'new_camp_form.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 
@@ -17,6 +18,13 @@ class Camp {
   final dynamic id;
 
   Camp(this.id);
+}
+
+class LatLongF {
+  final dynamic latitude;
+  final dynamic longitude;
+
+  LatLongF(this.latitude, this.longitude);
 }
 
 class Gmap extends StatefulWidget {
@@ -53,7 +61,7 @@ class _GmapState extends State<Gmap> {
     // });
     
     // Get the Stream
-    Stream<DatabaseEvent> stream = FirebaseDatabase.instance.ref("Camps2").onValue;
+    Stream<DatabaseEvent> stream = FirebaseDatabase.instance.ref("CampsTest").onValue;
 
     // Subscribe to the stream!
     stream.listen((DatabaseEvent event) {
@@ -75,8 +83,8 @@ class _GmapState extends State<Gmap> {
               draggable: false,
               position: LatLng(value['latitude'], value['longitude']), //With this parameter you automatically obtain latitude and longitude
               infoWindow: InfoWindow(
-                  title: "Encampment #$counter",
-                  snippet: 'This looks good',
+                  title: value['title'],
+                  snippet: value['snippet'],
                   onTap: () {
                     _modalButtonTap(camp);
                   },
@@ -147,19 +155,33 @@ class _GmapState extends State<Gmap> {
   
   // API call to database
 
+    var location = LatLongF(latlang.latitude, latlang.longitude);
 
-    final _refCamp = FirebaseDatabase.instance.ref("Camps2");
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 311,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[ 
+                NewCamp(location: location),
+              ],
+            ),
+          ),
+        );
+      },
+    );
 
-    // setState(() {
+    // final _refCamp = FirebaseDatabase.instance.ref("Camps2");
 
-    _refCamp.push().set({
-      // 'markerId': idCounter3,
-      'latitude': latlang.latitude,
-      'longitude': latlang.longitude
-    });
-
+    // _refCamp.push().set({
+    //   // 'markerId': idCounter3,
+    //   'latitude': latlang.latitude,
+    //   'longitude': latlang.longitude
     // });
-
 
   }
 

@@ -54,7 +54,7 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     
-    final _refCamp = FirebaseDatabase.instance.ref("Camps2/${camp.id}/Outreaches/");
+    final _refCamp = FirebaseDatabase.instance.ref("CampsTest/${camp.id}/Outreaches/");
 
     return Container(
       child: Padding(
@@ -100,8 +100,6 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                       // Validate returns true if the form is valid, or false otherwise.
                       _focusTents.unfocus();
                       _focusBags.unfocus();
-
-                      print(dateTimeToday);
 
                       if (_formKey.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
