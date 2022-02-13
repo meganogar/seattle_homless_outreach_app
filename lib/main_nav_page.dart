@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'fire_auth.dart';
 import 'gmap.dart';
@@ -17,6 +19,7 @@ import 'fire_auth.dart';
 import 'main.dart';
 import 'main_nav_page.dart';
 import 'login_page.dart';
+import 'google_auth.dart';
 
 
 class MainNavPage extends StatefulWidget {
@@ -113,7 +116,8 @@ class _MainNavPageState extends State<MainNavPage> {
                   ListTile(
                     title: ElevatedButton(
                       onPressed: () async {
-                        FirebaseAuth.instance.signOut();
+
+                        await Authentication.signOut(context: context);
 
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

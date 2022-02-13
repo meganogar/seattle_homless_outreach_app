@@ -106,6 +106,7 @@ flutter:
   assets:
     - assets/images/logotrrans.png
     - assets/images/asset_2.png
+    - assets/images/google.png
     - .env
 
   

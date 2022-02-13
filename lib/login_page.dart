@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sho_app/google_auth.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,6 +19,7 @@ import 'register_page.dart';
 import 'profile_page.dart';
 import 'main_nav_page.dart';
 import 'login_page.dart';
+import 'google_auth.dart';
 
 
 
@@ -134,7 +136,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final loginButon = Material(
+    final loginButton = Material(
       ///material widget gives us easier access to aesthetic features///
       elevation: 5.0, ///adds a shadow///
       borderRadius: BorderRadius.circular(30.0),
@@ -260,12 +262,68 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: loginButon,
+                                      child: loginButton,
                                     ),
                                     SizedBox(width: 24.0),
                                     Expanded(
                                       child: registerButton,
                                     ),
+                                    SizedBox(width: 10.0),
+                                    IconButton(
+                                      icon: Image.asset(
+                                        "assets/images/asset_2.png",
+                                        fit: BoxFit.contain
+                                      ),
+                                      iconSize: 50,
+
+                                      // onPressed: () async {
+
+                                      //   setState(() {
+                                      //     _isProcessing = true;
+                                      //   });
+
+                                      //   User? user = await Authentication.signInWithGoogle(context: context);
+
+                                      //   setState(() {
+                                      //     _isProcessing = false;
+                                      //   });
+
+                                      //   if (user != null) {
+                                      //     Navigator.of(context)
+                                      //         .pushReplacement(
+                                      //       MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             MainNavPage(user: user),
+                                      //       ),
+                                      //     );
+                                      //   }
+                                      //   }
+                                      // }, //
+                                      
+
+                                      
+                                      onPressed: () async{
+                                        setState(() {
+                                          _isProcessing = true;
+                                        });
+
+                                        User? user = await Authentication.signInWithGoogle(context: context);
+
+                                        setState(() {
+                                          _isProcessing = false;
+                                        });
+
+                                        if (user != null) {
+                                          Navigator.of(context)
+                                              .pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MainNavPage(user: user),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ) 
                                   ],
                                 )
                         ],

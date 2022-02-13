@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "97350301849",
+    "firebase_url": "https://sho-app-339919-default-rtdb.firebaseio.com",
+    "project_id": "sho-app-339919",
+    "storage_bucket": "sho-app-339919.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97350301849:android:bd18081fe012bf5fdba008",
+        "android_client_info": {
+          "package_name": "com.example.sho_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97350301849-83bensie2qe136kf54d3ln19rfmg155h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKxJL_vafT6Z4bIbtTeig4lP-70rItufY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97350301849-83bensie2qe136kf54d3ln19rfmg155h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "97350301849-ftjqauugbe9rfllib96as9ig4r624r6r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
