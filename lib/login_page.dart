@@ -220,8 +220,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-
-
             //Firebase is an async method, so we need to use future builder to indicate it should build once method completes
             child: FutureBuilder(
               future: _initializeFirebase(),
