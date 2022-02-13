@@ -66,14 +66,6 @@ class FireAuth {
           builder: (BuildContext ctx) {
             return AlertDialog(
               title: Text('No user found for that email.'),
-              // actions: [
-              //   TextButton(
-              //       onPressed: () {
-              //         // Close the dialog
-              //         Navigator.of(context).pop();
-              //       },
-              //       child: const Text('Okay'))
-              // ],
             );
         });
 

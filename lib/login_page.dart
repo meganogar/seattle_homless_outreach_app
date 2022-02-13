@@ -275,33 +275,6 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                         fit: BoxFit.contain
                                       ),
                                       iconSize: 50,
-
-                                      // onPressed: () async {
-
-                                      //   setState(() {
-                                      //     _isProcessing = true;
-                                      //   });
-
-                                      //   User? user = await Authentication.signInWithGoogle(context: context);
-
-                                      //   setState(() {
-                                      //     _isProcessing = false;
-                                      //   });
-
-                                      //   if (user != null) {
-                                      //     Navigator.of(context)
-                                      //         .pushReplacement(
-                                      //       MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             MainNavPage(user: user),
-                                      //       ),
-                                      //     );
-                                      //   }
-                                      //   }
-                                      // }, //
-                                      
-
-                                      
                                       onPressed: () async{
                                         setState(() {
                                           _isProcessing = true;

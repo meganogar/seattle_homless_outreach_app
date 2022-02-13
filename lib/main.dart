@@ -107,4 +107,4 @@ class MyApp extends StatelessWidget {
 /// 4. Work on showing current location
 /// 5. Update the login authentication so that when you enter a wrong password there is a message sent to user
 /// 6. Update the registration page so that if you don't have valid inpu you don't just get the doom spin 4eva
-/// 7. Fix 
+
