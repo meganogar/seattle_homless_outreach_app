@@ -108,6 +108,8 @@ return Container(
                       });
 
                       }
+                      
+                      Navigator.of(context).pop();
                     },
                     child: const Text('Create Camp'),
                   )

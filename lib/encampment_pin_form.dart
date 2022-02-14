@@ -155,6 +155,7 @@ class _EncampmentPinFormState extends State<EncampmentPinForm> {
                           'user': FirebaseAuth.instance.currentUser!.displayName
                         });
                       }
+                      Navigator.of(context).pop();
                     },
                     child: const Text('Send Data'),
                   ),

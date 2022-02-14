@@ -139,6 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             email: _emailTextController.text,
                                             password:
                                                 _passwordTextController.text,
+                                            context: context
                                           );
                                           setState(() {
                                             _isProcessing = false;

@@ -75,6 +75,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
   final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
+  bool _smallScreen = false;
 
   //  retrieves the current user, if it's not null, directs directly to teh MainNavPage
   // remembers previous state
@@ -212,107 +213,159 @@ class _MyLoginPageState extends State<MyLoginPage> {
       ),
     );
 
-    return Scaffold(
-      ///put our widgets together in Scaffold widget ///
-      ///let you implement the material standard app widgets that most application has: AppBar, BottomAppBar, FloatingActionButton, BottomSheet, Drawer, Snackbar///
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            //Firebase is an async method, so we need to use future builder to indicate it should build once method completes
-            child: FutureBuilder(
-              future: _initializeFirebase(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
+    final googleAuthTent = IconButton(
+      icon: Image.asset(
+        "assets/images/asset_2.png",
+        fit: BoxFit.contain
+      ),
+      iconSize: 50,
+      onPressed: () async{
+        setState(() {
+          _isProcessing = true;
+        });
 
-                  return Column(
-                    /// Column widget allows us to align form elements vertically ///
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        ///Widget to help with spacing, allows us to define height of image///
-                        height: 300.0,
-                        child: Image.asset(
-                          "assets/images/logotrrans.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+        User? user = await Authentication.signInWithGoogle(context: context);
 
-                      SizedBox(height: 45.0),
-                      
+        setState(() {
+          _isProcessing = false;
+        });
 
-                      Form(
-                      key: _formKey, 
+        if (user != null) {
+          Navigator.of(context)
+              .pushReplacement(
+            MaterialPageRoute(
+              builder: (context) =>
+                  MainNavPage(user: user),
+            ),
+          );
+        }
+      },
+    ); 
+
+    final MediaQueryData mediaQueryData;
+
+    final width = MediaQuery.of(context).size.width;
+    
+    
+    if (width < 365 ) {
+
+      setState(() {
+        _smallScreen = true;
+      });
+
+    }
+  
+
+    return SafeArea(
+      top: true,
+      bottom: true,
+
+      child: 
+    
+      Scaffold(
+        
+        ///put our widgets together in Scaffold widget ///
+        ///let you implement the material standard app widgets that most application has: AppBar, BottomAppBar, FloatingActionButton, BottomSheet, Drawer, Snackbar///
+        body: Center(
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              //Firebase is an async method, so we need to use future builder to indicate it should build once method completes
+              child: FutureBuilder(
+                future: _initializeFirebase(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+
+                    return 
+                    SingleChildScrollView(
+                    
                       child: Column(
+                        /// Column widget allows us to align form elements vertically ///
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                                  
-                          emailField,
-                          SizedBox(height: 25.0),
-                          passwordField,
-                          SizedBox(height: 35.0,),
+                          SizedBox(
+                            ///Widget to help with spacing, allows us to define height of image///
+                            height: 300.0,
+                            child: Image.asset(
+                              "assets/images/logotrrans.png",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
 
-                          _isProcessing
-                              ? CircularProgressIndicator()
-                              : Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: loginButton,
-                                    ),
-                                    SizedBox(width: 24.0),
-                                    Expanded(
-                                      child: registerButton,
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    IconButton(
-                                      icon: Image.asset(
-                                        "assets/images/asset_2.png",
-                                        fit: BoxFit.contain
-                                      ),
-                                      iconSize: 50,
-                                      onPressed: () async{
-                                        setState(() {
-                                          _isProcessing = true;
-                                        });
+                          SizedBox(height: 45.0),
+                          
 
-                                        User? user = await Authentication.signInWithGoogle(context: context);
+                          Form(
+                          key: _formKey, 
+                          child: 
+                          _smallScreen
+                            ? Column(
+                              children: <Widget>[
+                                        
+                                emailField,
+                                SizedBox(height: 25.0),
+                                passwordField,
+                                SizedBox(height: 35.0,),
 
-                                        setState(() {
-                                          _isProcessing = false;
-                                        });
+                                _isProcessing
+                                  ? CircularProgressIndicator()
+                                  : Column(
+                                    children: <Widget>[
+                                      loginButton,
+                                      SizedBox(height: 25.0),
+                                      registerButton,
+                                      SizedBox(height: 25.0),
+                                      googleAuthTent  
+                                    ]
+                                  )
+                              ]
+                            )
+                            : Column(
+                              children: <Widget>[
+                                        
+                                emailField,
+                                SizedBox(height: 25.0),
+                                passwordField,
+                                SizedBox(height: 35.0,),
+                                _isProcessing
+                                  ? CircularProgressIndicator()
+                                  : Row(
+                                    
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: loginButton,
+                                        ),
+                                        SizedBox(width: 24.0),
+                                        Expanded(
+                                          child: registerButton,
+                                        ),
+                                        SizedBox(width: 10.0),
+                                        googleAuthTent
+                                      ],
+                                    )
 
-                                        if (user != null) {
-                                          Navigator.of(context)
-                                              .pushReplacement(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainNavPage(user: user),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ) 
-                                  ],
-                                )
+                              ],
+                            ),
+                        )
+
+
                         ],
-                      ),
-                    )
-
-
-                    ],
+                      )
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
           ),
         ),
-      ),
+      )
     );
   }
 }

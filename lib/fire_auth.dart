@@ -15,6 +15,7 @@ class FireAuth {
     required String name,
     required String email,
     required String password,
+    required context,
   }) async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -24,6 +25,7 @@ class FireAuth {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword( //uses the firebase auth predefined method
         email: email,
         password: password,
+
       );
 
       user = userCredential.user;  //assigns the user as userCredential to give them access additional methods
@@ -32,9 +34,23 @@ class FireAuth {
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) { //catches any errors for the email/password strength
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text('The password provided is too weak.'),
+            );
+        });
+
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text('The account already exists for that email.'),
+            );
+        });
+
       }
     } catch (e) {
       print(e);

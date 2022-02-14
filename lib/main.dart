@@ -87,18 +87,23 @@ class MyApp extends StatelessWidget {
 
   @override
   ///@override marks an instance member as overriding a superclass member with the same name///
-  Widget build(BuildContext context) {
-    /// MaterialApp widget defining our app title, our app theme, and our login page. introduces Navigator ///
-    /// is the starting point of your app, it tells Flutter that you are going to use Material components and follow material design in your app///
-    return MaterialApp(
-      ///A convenience widget that wraps a number of widgets that are commonly required for material design applications///
-      title: 'SHO App',
-      theme: ThemeData(
-        primarySwatch: colorCustom,
-      ),
-      home: MyLoginPage(title: 'Seattle Homeless Outreach App'),
-    );
-  }
+    Widget build(BuildContext context) {
+      /// MaterialApp widget defining our app title, our app theme, and our login page. introduces Navigator ///
+      /// is the starting point of your app, it tells Flutter that you are going to use Material components and follow material design in your app///
+
+      return 
+      
+        MaterialApp(
+          ///A convenience widget that wraps a number of widgets that are commonly required for material design applications///
+          title: 'SHO App',
+          
+          theme: ThemeData(
+            primarySwatch: colorCustom,
+          ),
+          home: MyLoginPage(title: 'Seattle Homeless Outreach App'),
+        );
+
+    }
 }
 
 /// Future things to do
