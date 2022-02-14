@@ -46,11 +46,12 @@ void main() async {
   // js.context["my_dart_var"] = mapsApi;
   //Custom DOM event to signal to js the execution of the dart code
   // html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
-  await dotenv.load();
-  var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
-  final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x"; //&callback=initMap
+  
+  // await dotenv.load();
+  // var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
+  // final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x"; //&callback=initMap
 
-  createScriptElement(mapsApi);
+  // createScriptElement(mapsApi);
   
   // Inititalizes the Firebase App, it is an async method 
   WidgetsFlutterBinding.ensureInitialized();
