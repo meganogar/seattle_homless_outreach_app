@@ -41,8 +41,9 @@ Seattle Homeless Outreach is registered as a web app with Firebase for authentic
 
 ### Google Maps
 Seattle Homeless Outreach also utilizes a google maps key that is registered to the Seattle Homeless Outreach domain.  In order to replicate, you will need to register your own API key and include this script in the head of your web/index.html file:
+
 ​​ 
-`code` <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE"></script> 
+`<script src="https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE"></script>`
  
 - Git a google maps API key: https://developers.google.com/maps/documentation/javascript/get-api-key 
  
@@ -52,5 +53,5 @@ This app is currently deployed at: [SHO App](https://sho-app-339919.web.app/#/)
 ### Installation
 1. To install this code base on your local computer for replication after the above has been completed.
 2. Clone this repository.
-3. Install dependencies by running `code` flutter packages get.
+3. Install dependencies by running `flutter packages get`.
 4. Flutter run will open up a simulator on your default web browser.
