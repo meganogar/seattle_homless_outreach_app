@@ -4,7 +4,6 @@ Seattle Homeless Outreach is a 501(c)3 nonprofit geared to bringing essential su
 ![login screen](images/login_screen.png)
 ![registration page](images/register_page.png)
 ![main navigation page](images/main_login.png)
-![registration page](images/register_page.png)
 ![encampment map](images/encampment_map.png)
 
 
