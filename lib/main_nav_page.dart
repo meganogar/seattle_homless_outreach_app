@@ -85,13 +85,8 @@ class _MainNavPageState extends State<MainNavPage> {
                   ),
                   ListTile(
                     title: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyMaps()),
-                        );
-                      },
-                      child: Text('Special Requests'),
+                      onPressed: null,
+                      child: Text('Encampment Trends'),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
                         textStyle:

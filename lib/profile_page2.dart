@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'fire_auth.dart';
 
 import 'login_page.dart';
-import 'main_nav_page.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -102,17 +101,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             setState(() {
                               _currentUser = user;
                             });
-                          }
-                          if (_currentUser.emailVerified) {
-
-                            Navigator.of(context)
-                                .pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MainNavPage(user: _currentUser),
-                              ),
-                            );
-
                           }
                         },
                       ),

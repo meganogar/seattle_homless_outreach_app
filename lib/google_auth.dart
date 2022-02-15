@@ -101,7 +101,6 @@ class Authentication {
         // await googleSignIn.disconnect();
       }
 
-      print('sign out for non-googs');
       await FirebaseAuth.instance.signOut();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

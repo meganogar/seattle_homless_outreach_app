@@ -242,12 +242,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
       },
     ); 
 
-    final MediaQueryData mediaQueryData;
 
     final width = MediaQuery.of(context).size.width;
     
     
-    if (width < 365 ) {
+    if (width < 400 ) {
 
       setState(() {
         _smallScreen = true;
