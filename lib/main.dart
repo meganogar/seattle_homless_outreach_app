@@ -1,22 +1,8 @@
 import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'gmap.dart';
-import 'showmultmarkers.dart';
-
-import 'fire_auth.dart';
-import 'validator.dart';
-import 'register_page.dart';
-import 'profile_page.dart';
-import 'main_nav_page.dart';
 import 'login_page.dart';
 
 // import 'dart:js' as js;

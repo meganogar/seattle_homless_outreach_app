@@ -1,14 +1,7 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 import 'dart:async';
-import 'dart:math';
-
 import 'encampment_pin_form.dart';
 import 'new_camp_form.dart';
 

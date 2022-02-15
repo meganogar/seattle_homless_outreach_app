@@ -1,7 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 class Validator {
   ///alidators will help to check whether the user has entered any 
   ///inappropriate value in a specific field and show an error accordingly
