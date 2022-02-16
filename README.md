@@ -50,8 +50,19 @@ Seattle Homeless Outreach also utilizes a google maps key that is registered to 
 ### Deployment
 This app is currently deployed at: [SHO App](https://sho-app-339919.web.app/#/)
 
+For any future edits to this project, these are the steps to prepare your fires for deployment:
+
+1. `flutter clean`
+2. `flutter packages get`
+3. `flutter build web`
+4. `firebase deploy --only hosting`
+
 ### Installation
 1. To install this code base on your local computer for replication after the above has been completed.
 2. Clone this repository.
 3. Install dependencies by running `flutter packages get`.
 4. Flutter run will open up a simulator on your default web browser.
+
+
+
+
