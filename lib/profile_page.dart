@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'fire_auth.dart';
 import 'login_page.dart';
+import 'main_nav_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -99,17 +100,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               _currentUser = user;
                             });
                           }
-                          // if (_currentUser.emailVerified) {
+                          if (_currentUser.emailVerified) {
 
-                          //   Navigator.of(context)
-                          //       .pushReplacement(
-                          //     MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           MainNavPage(user: _currentUser),
-                          //     ),
-                          //   );
+                            Navigator.of(context)
+                                .pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MainNavPage(user: _currentUser),
+                              ),
+                            );
 
-                          // }
+                          }
                         },
                       ),
                     ],
