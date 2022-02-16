@@ -5,7 +5,6 @@ import 'profile_page.dart';
 import 'login_page.dart';
 import 'google_auth.dart';
 
-
 class MainNavPage extends StatefulWidget {
   final User user;
   const MainNavPage({ Key? key, required this.user }) : super(key: key);

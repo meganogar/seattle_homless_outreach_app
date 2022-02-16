@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,11 +34,11 @@ void main() async {
   //Custom DOM event to signal to js the execution of the dart code
   // html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   
-  // await dotenv.load();
-  // var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
-  // final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x"; //&callback=initMap
+  await dotenv.load();
+  var x = dotenv.env['GOOGLE_MAPS_API_KEY'];
+  final String mapsApi = "https://maps.googleapis.com/maps/api/js?key=$x"; //&callback=initMap
 
-  // createScriptElement(mapsApi);
+  createScriptElement(mapsApi);
   
   // Inititalizes the Firebase App, it is an async method 
   WidgetsFlutterBinding.ensureInitialized();

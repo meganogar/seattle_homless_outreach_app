@@ -5,6 +5,7 @@ import 'validator.dart';
 import 'profile_page.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }

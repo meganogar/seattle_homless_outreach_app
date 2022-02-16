@@ -8,8 +8,6 @@ import 'register_page.dart';
 import 'main_nav_page.dart';
 import 'google_auth.dart';
 
-
-
 class MyLoginPage extends StatefulWidget {
   /// contain fields that affect how it looks ///
 

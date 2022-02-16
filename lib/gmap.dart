@@ -5,6 +5,7 @@ import 'dart:async';
 import 'encampment_pin_form.dart';
 import 'new_camp_form.dart';
 
+
 FirebaseDatabase database = FirebaseDatabase.instance;
 
 class Camp {

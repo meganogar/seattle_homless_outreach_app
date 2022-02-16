@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class FireAuth {
   // For registering a new user with email & password and associated them with this user, again, needs to be a future
   // since it makes a call to firebase
